@@ -2,6 +2,10 @@ sharable-dataframes/cython/*.cpp
 sharable-dataframes/cython/*.so
 sharable-dataframes/cython/record.txt
 
+# Ignore model files
+*.pt
+*.onnx
+
 # CPP build
 sharable-dataframes/cpp/build
 

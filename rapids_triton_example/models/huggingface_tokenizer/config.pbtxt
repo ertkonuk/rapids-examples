@@ -1,0 +1,36 @@
+# Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+name: "huggingface_tokenizer"
+backend: "python"
+input [
+ {
+    name: "product_reviews"
+    data_type: TYPE_STRING
+    dims: [-1]
+  }
+]
+output [
+   {
+    name: "input_ids"
+    data_type: TYPE_INT32
+    dims: [ -1, 256]
+  },
+  
+   {
+    name: "attention_mask"
+    data_type: TYPE_INT32
+    dims: [-1, 256]
+  }
+]
+
+instance_group [{ kind: KIND_GPU }]
+
+### Path of environment tarred using conda-pack
+### SEE: https://github.com/triton-inference-server/python_backend#2-packaging-the-conda-environment
+#####parameters: 
+#####[
+#####
+#####    {
+#####      key: "EXECUTION_ENV_PATH"
+#####      value: {string_value: "/root/miniconda3/envs/rapids/rapids.tar.gz"}
+#####    }
+#####]  

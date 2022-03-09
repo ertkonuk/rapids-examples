@@ -17,9 +17,11 @@ RUN export PYTHONNOUSERSITE=True & conda-pack -o /root/miniconda3/envs/rapids/ra
 COPY ./build_python_stub.sh ./build_python_stub.sh
 RUN export PYTHONNOUSERSITE=True & bash ./build_python_stub.sh
 
+COPY models /opt/tritonserver/models/
 COPY models models/
 
 RUN cp python_backend/build/triton_python_backend_stub models/rapids_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch/.
+RUN cp python_backend/build/triton_python_backend_stub models/huggingface_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_hugf/.
 
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
