@@ -1,4 +1,4 @@
-name: "end_to_end_pytorch"
+name: "end_to_end_pytorch_rapids"
 platform: "ensemble"
 max_batch_size: 128
 input [

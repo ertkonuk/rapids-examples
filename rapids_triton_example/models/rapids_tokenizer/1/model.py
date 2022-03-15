@@ -106,9 +106,8 @@ class TritonPythonModel:
 
             out_tensor_0 = pb_utils.Tensor.from_dlpack("input_ids", input_ids)
             out_tensor_1 = pb_utils.Tensor.from_dlpack("attention_mask", attention_mask )
-            out_tensor_2 = pb_utils.Tensor.from_dlpack("metadata", metadata)
-            
-
+            out_tensor_2 = pb_utils.Tensor.from_dlpack("metadata", metadata)            
+              
             # Create InferenceResponse. You can set an error here in case
             # there was a problem with handling this inference request.
             # Below is an example of how you can set errors in inference
@@ -116,9 +115,15 @@ class TritonPythonModel:
             #
             # pb_utils.InferenceResponse(
             #    output_tensors=..., TritonError("An error occured"))
-            inference_response = pb_utils.InferenceResponse(
-                output_tensors=[out_tensor_0, out_tensor_1,out_tensor_2])
+            if out_tensor_0.is_cpu():
+              error = pb_utils.TritonError('The output tensor is in CPU!')
+            
+              inference_response = pb_utils.InferenceResponse([out_tensor_0, out_tensor_1,out_tensor_2], error)
+            else:
+              inference_response = pb_utils.InferenceResponse(output_tensors=[out_tensor_0, out_tensor_1,out_tensor_2])                        
+            
             responses.append(inference_response)
+
 
         # You should return a list of pb_utils.InferenceResponse. Length
         # of this list must match the length of `requests` list.

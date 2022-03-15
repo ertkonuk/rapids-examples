@@ -12,17 +12,17 @@ output [
    {
     name: "input_ids"
     data_type: TYPE_INT32
-    dims: [ -1, 256]
+    dims: [ -1, -1]
   },
   
    {
     name: "attention_mask"
     data_type: TYPE_INT32
-    dims: [-1, 256]
+    dims: [-1, -1]
   }
 ]
 
-instance_group [{ kind: KIND_GPU }]
+instance_group [{ kind: KIND_CPU }]
 
 ### Path of environment tarred using conda-pack
 ### SEE: https://github.com/triton-inference-server/python_backend#2-packaging-the-conda-environment

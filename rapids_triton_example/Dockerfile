@@ -20,8 +20,8 @@ RUN export PYTHONNOUSERSITE=True & bash ./build_python_stub.sh
 COPY models /opt/tritonserver/models/
 COPY models models/
 
-RUN cp python_backend/build/triton_python_backend_stub models/rapids_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch/.
-RUN cp python_backend/build/triton_python_backend_stub models/huggingface_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_hugf/.
+RUN cp python_backend/build/triton_python_backend_stub models/rapids_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_rapids/.
+RUN cp python_backend/build/triton_python_backend_stub models/huggingface_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_huggingface/.
 
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh

@@ -56,7 +56,7 @@ class TritonPythonModel:
         #self.cudf_tokenizer = SubwordTokenizer(v_p, do_lower_case=True)
 
         #self.cudf_lib = cudf
-        self.seq_len = 256
+        self.seq_len = 256      
 
     def execute(self, requests):
         """`execute` MUST be implemented in every Python model. `execute`
@@ -86,12 +86,9 @@ class TritonPythonModel:
         # and create a pb_utils.InferenceResponse for each of them.
         for request in requests:
             # Get INPUT0
-            #raw_strings = pb_utils.get_input_tensor_by_name(request, "product_reviews").as_numpy()
-            #str_ls = [s.decode() for s in raw_strings]
             str_ls = [s.decode('UTF-8') for s in pb_utils.get_input_tensor_by_name(request, "product_reviews").as_numpy().tolist()]
-            #str_series = self.cudf_lib.Series(str_ls)
             
-            ### Use RAPIDS
+            ### Use Huggingface
             tokens = self.tokenizer(str_ls,
                                     max_length=self.seq_len,                                    
                                     padding="max_length",
@@ -99,7 +96,6 @@ class TritonPythonModel:
                                     truncation=True,
                                     add_special_tokens=False)
 
-            #tokens_output_d = {k:v.cuda() for k,v in tokens_output.items()}
 
             # Create output tensors. You need pb_utils.Tensor
             # objects to create pb_utils.InferenceResponse.
@@ -109,10 +105,7 @@ class TritonPythonModel:
             input_ids      = pb_utils.Tensor("input_ids", tokens["input_ids"].astype(np.int32))
             attention_mask = pb_utils.Tensor("attention_mask", tokens["attention_mask"].astype(np.int32))          
 
-            #out_tensor_0 = pb_utils.Tensor.from_dlpack("input_ids", input_ids)
-            #out_tensor_1 = pb_utils.Tensor.from_dlpack("attention_mask", attention_mask )
-            #out_tensor_2 = pb_utils.Tensor.from_dlpack("metadata", metadata)
-            
+
 
             # Create InferenceResponse. You can set an error here in case
             # there was a problem with handling this inference request.
@@ -121,8 +114,15 @@ class TritonPythonModel:
             #
             # pb_utils.InferenceResponse(
             #    output_tensors=..., TritonError("An error occured"))
-            inference_response = pb_utils.InferenceResponse(
-                output_tensors=[input_ids, attention_mask])
+            #if input_ids.is_cpu():
+            #  error = pb_utils.TritonError('The output tensor is in CPU!')
+#
+            #  #inference_response = pb_utils.InferenceResponse(output_tensors=[input_ids, attention_mask], error)
+            #  inference_response = pb_utils.InferenceResponse([input_ids, attention_mask], error)
+            #else:
+            #  inference_response = pb_utils.InferenceResponse([input_ids, attention_mask])
+            
+            inference_response = pb_utils.InferenceResponse([input_ids, attention_mask])
             responses.append(inference_response)
 
         # You should return a list of pb_utils.InferenceResponse. Length
