@@ -1,6 +1,6 @@
 name: "end_to_end_pytorch_rapids"
 platform: "ensemble"
-max_batch_size: 128
+max_batch_size: 1000
 input [
   {
     name: "product_reviews"
