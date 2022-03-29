@@ -1,4 +1,4 @@
-name: "end_to_end_pytorch_huggingface"
+name: "end_to_end_onnx_huggingface"
 platform: "ensemble"
 max_batch_size: 1024
 input [
@@ -32,7 +32,7 @@ ensemble_scheduling {
       }
     },
     {
-      model_name: "sentiment_model_pytorch"
+      model_name: "sentiment_model_onnx"
       model_version: 1
       input_map {
         key: "input_ids"

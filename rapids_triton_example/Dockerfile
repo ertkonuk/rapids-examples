@@ -22,6 +22,8 @@ COPY models models/
 
 RUN cp python_backend/build/triton_python_backend_stub models/rapids_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_rapids/.
 RUN cp python_backend/build/triton_python_backend_stub models/huggingface_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_pytorch_huggingface/.
+RUN cp python_backend/build/triton_python_backend_stub models/rapids_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_onnx_rapids/.
+RUN cp python_backend/build/triton_python_backend_stub models/huggingface_tokenizer/. && cp python_backend/build/triton_python_backend_stub models/end_to_end_onnx_huggingface/.
 
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh

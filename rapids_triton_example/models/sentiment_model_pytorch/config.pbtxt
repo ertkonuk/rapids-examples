@@ -7,12 +7,12 @@ input [
  {
     name: "input_ids"
     data_type: TYPE_INT32
-    dims: [ -1, 256]
+    dims: [ -1, -1]
   },
   {
     name: "attention_mask"
     data_type: TYPE_INT32
-    dims: [-1, 256]
+    dims: [-1, -1]
   }
 ]
 output [

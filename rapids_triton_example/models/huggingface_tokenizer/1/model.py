@@ -15,6 +15,7 @@ import time
 import triton_python_backend_utils as pb_utils
 
 from transformers import BertTokenizerFast, TensorType
+#from tokenizers import BertWordPieceTokenizer
 
 class TritonPythonModel:
     """Your Python model must use the same class name. Every Python model
@@ -50,6 +51,7 @@ class TritonPythonModel:
         
 
         self.tokenizer = BertTokenizerFast.from_pretrained('bert-base-cased', do_lower_case=False)
+        #self.tokenizer = BertWordPieceTokenizer('bert-base-cased')
 
         # get vocab
         #v_p = Path(__file__).with_name('vocab_hash.txt')
